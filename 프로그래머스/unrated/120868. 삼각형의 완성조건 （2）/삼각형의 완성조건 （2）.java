@@ -23,6 +23,12 @@ max(1, 2) < min(1,2) + c
 두 경우가 공통인 개수 세기
 max(a, b) - min(a, b) < c < a+b
 
+a < b,
+b - a < c < a + b
+c = (a + b) - (b - a) - 1
+  = a + b - b + a - 1
+  = 2*a - 1
+
 ex2)
 [3,6], c=?
 6-3 < c < 3+6
@@ -38,6 +44,6 @@ space: O(1)
 */
 class Solution {
     public int solution(int[] sides) {
-        return sides[0] + sides[1] - Math.abs(sides[0] - sides[1]) - 1;
+        return 2 * Math.min(sides[0], sides[1]) - 1;
     }
 }
