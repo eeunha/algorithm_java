@@ -67,20 +67,13 @@ class Solution {
                 if (curPos != '#') continue;
                 
                 // 파일이 있는 경우
-                if (minX > i) {
-                    minX = i;
-                } else if (maxX < i) {
-                    maxX = i;
-                }
-                 
-                if (minY > j) {
-                    minY = j;
-                } else if (maxY < j) {
-                    maxY = j;
-                }
+                minX = Math.min(minX, i);
+                minY = Math.min(minY, j);
+                maxX = Math.max(maxX, i);
+                maxY = Math.max(maxY, j);
             }
         }  
          
-        return (maxX == Integer.MIN_VALUE) ? new int[]{minX, minY, minX + 1, minY + 1} : new int[]{minX, minY, maxX + 1, maxY + 1};
+        return new int[]{minX, minY, maxX + 1, maxY + 1};
     }
 }
