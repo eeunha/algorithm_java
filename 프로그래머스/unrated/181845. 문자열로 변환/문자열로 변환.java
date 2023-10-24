@@ -1,5 +1,6 @@
 class Solution {
     public String solution(int n) {
-        return n + "";
+        StringBuilder sb = new StringBuilder();
+        return sb.append(n).toString();
     }
 }
