@@ -2,17 +2,17 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] arr, int[] delete_list) {
-        ArrayList<Integer> list = new ArrayList<>();
-        HashSet<Integer> set = new HashSet<>();
-        
+        List<Integer> list = new ArrayList<>();
+        for (int n : arr) {
+            list.add(n);
+        }
         for (int n : delete_list) {
-            set.add(n);
+            list.remove((Integer) n);
         }
-        
-        for (int i = 0; i < arr.length; i++) {
-            if (!set.contains(arr[i])) list.add(arr[i]);
+        int[] answer = new int[list.size()];
+        for (int i = 0; i < list.size(); i++){
+            answer[i] = list.get(i);
         }
-        
-        return list.stream().mapToInt(i -> i).toArray();
+        return answer;
     }
 }
