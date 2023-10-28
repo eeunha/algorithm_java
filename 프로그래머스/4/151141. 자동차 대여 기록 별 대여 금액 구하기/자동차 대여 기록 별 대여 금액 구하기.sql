@@ -6,19 +6,6 @@
 -- history_id, fee 출력하기
 -- 결과는 대여 금액을 기준으로 내림차순 정렬, 대여 기록 ID를 기준으로 내림차순 정렬
 
--- 트럭인 차의 아이디 구하기
--- select c.car_id, c.daily_fee, h.history_id, h.end_date - h.start_date + 1 as "duration",
---     case
---         when  h.end_date - h.start_date + 1  >= 90 then '90일 이상'
---         when  h.end_date - h.start_date + 1  >= 30 then '30일 이상'
---         when  h.end_date - h.start_date + 1  >= 7 then '7일 이상'
---         else '7일 미만'
---     end as "duration_type"
--- from CAR_RENTAL_COMPANY_CAR c
---     inner join CAR_RENTAL_COMPANY_RENTAL_HISTORY h
---     on c.car_id = h.car_id
--- where c.car_type = '트럭';
-
 select a.history_id, 
     case
         when d.duration_type is null then a.daily_fee * a."duration"
