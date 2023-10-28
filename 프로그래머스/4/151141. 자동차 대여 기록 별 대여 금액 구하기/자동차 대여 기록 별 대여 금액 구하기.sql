@@ -8,22 +8,22 @@
 
 select a.history_id, 
     case
-        when d.duration_type is null then a.daily_fee * a."duration"
-        else (a.daily_fee * a."duration") * (1 - d.discount_rate / 100)
-    end as "fee"
+        when d.duration_type is null then a.daily_fee * a.duration
+        else (a.daily_fee * a.duration) * (1 - d.discount_rate / 100)
+    end as fee
 from (select car_type, duration_type, discount_rate 
       from CAR_RENTAL_COMPANY_DISCOUNT_PLAN 
       where car_type = '트럭') d
-    right outer join (select c.car_id, c.daily_fee, h.history_id, h.end_date - h.start_date + 1 as "duration",
+    right outer join (select c.car_id, c.daily_fee, h.history_id, h.end_date - h.start_date + 1 as duration,
             case
                 when  h.end_date - h.start_date + 1  >= 90 then '90일 이상'
                 when  h.end_date - h.start_date + 1  >= 30 then '30일 이상'
                 when  h.end_date - h.start_date + 1  >= 7 then '7일 이상'
                 else '7일 미만'
-            end as "duration_type"
+            end as duration_type
         from CAR_RENTAL_COMPANY_CAR c
             inner join CAR_RENTAL_COMPANY_RENTAL_HISTORY h
             on c.car_id = h.car_id
         where c.car_type = '트럭') a
-    on d.duration_type = a."duration_type"
-order by "fee" desc, a.history_id desc;
+    on d.duration_type = a.duration_type
+order by fee desc, a.history_id desc;
