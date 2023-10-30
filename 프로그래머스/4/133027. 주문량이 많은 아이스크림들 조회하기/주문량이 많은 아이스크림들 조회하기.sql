@@ -1,6 +1,6 @@
 select flavor
 from (
-    select flavor, total_order, rownum
+    select flavor, rownum
     from (
         select flavor, sum(total_order) as total_order
         from (select * from first_half
