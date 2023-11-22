@@ -44,7 +44,7 @@ algo: 순회
 100 미만 값이 나왔다면 빠진 값의 수를 결과 배열에 넣기
 
 
-time:
+time: O(nm), n = progresses.length, m = 작업일
 space: O(n), n = progresses.length
 */
 class Solution {
