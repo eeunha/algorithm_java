@@ -64,11 +64,7 @@ class Solution {
 		int count = 0;
 
 		while (front < progresses.length) {
-			if (front == progresses.length - 1) {
-				list.add(1);
-				break;
-			}
-
+			
 			// 매일 speeds만큼 더한다.
 			for (int i = front; i < progresses.length; i++) {
 				progresses[i] += speeds[i];
