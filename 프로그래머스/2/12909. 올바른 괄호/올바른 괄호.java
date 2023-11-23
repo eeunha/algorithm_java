@@ -15,7 +15,7 @@ import java.util.*;
  
  
  time: O(n), n = s.length()
- space: O(n), n = s.length()
+ space: O(1)
 */
 class Solution {
     boolean solution(String s) {
@@ -24,25 +24,22 @@ class Solution {
 			return false;
 		}
 
-		Stack<Character> stack = new Stack<>();
+		int count = 0;
 
-		// 한 문자씩 보기
 		for (int i = 0; i < s.length(); i++) {
 			char cur = s.charAt(i);
 
 			if (cur == '(') {
-				stack.push(cur);
+				count++;
 			} else {
-				if (stack.empty()) {
+				if (count == 0) {
 					return false;
 				} else {
-					stack.pop();
+					count--;
 				}
 			}
 		}
 
-		// 다 돌았는데 스택에 값이 남아있다면 올바르지 않음. -> false
-		// 올바르면 true
-		return (stack.empty()) ? true : false;
+		return (count == 0) ? true : false;
     }
 }
