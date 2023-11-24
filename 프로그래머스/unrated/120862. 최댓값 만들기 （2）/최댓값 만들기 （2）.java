@@ -1,23 +1,26 @@
 import java.util.*;
 /*
-I:
-O:
-C:
-E:
+ 23.11.24
+ I: int[] numbers
+ O: int result
+ C: -10,000 ≤ numbers의 원소 ≤ 10,000
+ 	2 ≤ numbers 의 길이 ≤ 100
+ E: numbers.length == 2 -> return numbers[0] * numbers[1]
+ 
+ numbers 정렬하기
+ 
+ 1. 최대값이 양수값인가?
+ 	음수와 양수가 2개이상씩 있는가 확인
+ 	음수값이 2개이상인 경우 -> 가장 작은 음수값 2개 곱하기
+ 	양수값이 2개 이상인 경우 -> 가장 큰 양수값 2개 곱하기
+ 
+ 2. 최대값이 음수값인가?
+ 	가장 큰 음수값 * 가장 작은 양수값
 
-모두 음수인 경우
-
-
-모두 양수인 경우
-
-둘다 있는 경우
-1. 가장 작은 음수 2개 곱한 값
-2. 가장 큰 양수 2개 곱한 값
-3. 가장 큰 음수 * 가장 작은 양수
-배교
-
-time:
-space:
+ numbers[0] * numbers[1], numbers[numbers.length - 2] * numbers[numbers.length - 1], 중간값 
+ 
+ time: O(NlogN), N = numbers.length
+ space: O(1)
 */
 class Solution {
     public int solution(int[] numbers) {
