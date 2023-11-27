@@ -19,4 +19,29 @@ class Solution {
         
         return answer;
     }
+
+    public int[] solution2(int[] numbers, String direction) {
+        //edge cases
+        if (numbers.length == 1) return numbers;
+        
+        int[] answer = new int[numbers.length];
+        
+        int start = 0;
+        int end = numbers.length - 2;
+        int dir = 1;
+        answer[0] = numbers[numbers.length - 1];
+
+        if (direction.equals("left")) {
+            start++;
+            end++;
+            answer[answer.length - 1] = numbers[0];
+            dir = -1;
+        }
+        
+        for (int i = start; i <= end; i++) {
+            answer[i + dir] = numbers[i];
+        }
+        
+        return answer;
+    }
 }
