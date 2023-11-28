@@ -34,19 +34,18 @@ class Solution {
 		int index = 0;
 
 		for (int i = 0; i < commands.length; i++) {
-			int startIdx = commands[i][0] - 1;
-			int endIdx = commands[i][1] - 1;
-			int findIdx = commands[i][2] - 1;
+			int startIdx = commands[i][0] - 1; //자르기 시작할 인덱스
+			int endIdx = commands[i][1];    //마지막으로 잘리는 인덱스 + 1
+			int findIdx = commands[i][2] - 1; //찾아야 할 인덱스
 
-			if (startIdx == endIdx) {
-				answer[index] = array[startIdx];
-				index++;
-			} else {
-				int[] temp = Arrays.copyOfRange(array, startIdx, endIdx + 1);
+			if (startIdx == endIdx) { //하나의 숫자만 자를 경우
+				answer[index] = array[startIdx]; //결과를 반환할 배열에 저장
+			} else { //여러 개의 숫자를 자를 경우
+				int[] temp = Arrays.copyOfRange(array, startIdx, endIdx);
 				Arrays.sort(temp);
-				answer[index] = temp[findIdx];
-				index++;
+				answer[index] = temp[findIdx]; //결과를 반환할 배열에 저장
 			}
+            index++; //반환할 배열의 인덱스 증가
 		}
 
 		return answer;
