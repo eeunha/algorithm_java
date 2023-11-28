@@ -31,7 +31,6 @@ space: O(n), n = commands.length
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
         int[] answer = new int[commands.length];
-		int index = 0;
 
 		for (int i = 0; i < commands.length; i++) {
 			int startIdx = commands[i][0] - 1; //자르기 시작할 인덱스
@@ -39,15 +38,13 @@ class Solution {
 			int findIdx = commands[i][2] - 1; //찾아야 할 인덱스
 
 			if (startIdx == endIdx) { //하나의 숫자만 자를 경우
-				answer[index] = array[startIdx]; //결과를 반환할 배열에 저장
+				answer[i] = array[startIdx]; //결과를 반환할 배열에 저장
 			} else { //여러 개의 숫자를 자를 경우
 				int[] temp = Arrays.copyOfRange(array, startIdx, endIdx);
 				Arrays.sort(temp);
-				answer[index] = temp[findIdx]; //결과를 반환할 배열에 저장
+				answer[i] = temp[findIdx]; //결과를 반환할 배열에 저장
 			}
-            index++; //반환할 배열의 인덱스 증가
 		}
-
 		return answer;
     }
 }
