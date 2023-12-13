@@ -3,11 +3,11 @@ class Solution {
         //edge cases
         if (seoul.length == 1) return "김서방은 0에 있다";
         
-        String answer = "김서방은 ";
+        String answer = "";
         
         for (int i = 0; i < seoul.length; i++) {
             if (seoul[i].equals("Kim")) {
-                answer += i + "에 있다";
+                answer = "김서방은 " + i + "에 있다";
                 break;
             }
         }
