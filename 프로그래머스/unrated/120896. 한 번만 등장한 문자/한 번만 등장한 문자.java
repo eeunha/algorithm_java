@@ -13,7 +13,7 @@ class Solution {
         for (int i = 0; i < s.length(); i++) {
             char curC = s.charAt(i);
             
-            countArr[curC - 97]++;
+            countArr[curC - 'a']++;
         }
         
         for (int i = 0; i < countArr.length; i++) {
