@@ -29,20 +29,14 @@ class Solution {
 			count = 0;
 
 			for (int i = idx; i < speeds.length; i++) {
-
+ 
 				progresses[i] += speeds[i];
 			}
 
-			for (int i = idx; i < progresses.length; i++) {
-
-				if (progresses[i] >= 100) {
-
-					count++;
-					idx++;
-
-				} else {
-					break;
-				}
+			while (idx < progresses.length && progresses[idx] >= 100) {
+				
+				count++;
+				idx++;
 			}
 
 			if (count > 0) {
