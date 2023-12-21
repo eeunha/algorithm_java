@@ -41,19 +41,14 @@ class Solution {
 					idx++;
 
 				} else {
-
-					if (count > 0) {
-						arr.add(count);
-					}
-
 					break;
 				}
 			}
-		}
 
-		if (count > 0) {
+			if (count > 0) {
 
-			arr.add(count);
+				arr.add(count);
+			}
 		}
 
 		return arr.stream().mapToInt(i -> i).toArray();
