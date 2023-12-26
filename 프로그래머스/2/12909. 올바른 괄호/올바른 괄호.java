@@ -1,7 +1,7 @@
 import java.util.*;
 
 /*
- 23.11.23
+ 23.12.26
  
  I: String s
  O: boolean
@@ -10,7 +10,7 @@ import java.util.*;
  E: 시작 문자가 ) || 마지막 문자가 ( => false
  	s.length % 2 == 1 => false
  
- ds: stack
+ ds: 
  algo: stack
  
  
@@ -19,27 +19,16 @@ import java.util.*;
 */
 class Solution {
     boolean solution(String s) {
-        // edge cases
-		if (s.length() % 2 == 1 || s.charAt(0) == ')' || s.charAt(s.length() - 1) == '(') {
-			return false;
-		}
-
-		int count = 0;
+        int count = 0;
 
 		for (int i = 0; i < s.length(); i++) {
-			char cur = s.charAt(i);
 
-			if (cur == '(') {
-				count++;
-			} else {
-				if (count == 0) {
-					return false;
-				} else {
-					count--;
-				}
-			}
+			count += (s.charAt(i) == '(') ? 1 : -1;
+
+			if (count < 0)
+				return false;
 		}
-
-		return (count == 0) ? true : false;
+        
+		return (count > 0) ? false : true;
     }
 }
