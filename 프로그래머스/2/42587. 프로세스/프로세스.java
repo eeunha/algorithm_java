@@ -1,4 +1,8 @@
 import java.util.*;
+/*
+time: O(NlogN)
+space: O(N)
+*/
 class Solution {
     public int solution(int[] priorities, int location) {
 		int answer = 0; // 빠져나간 개수
