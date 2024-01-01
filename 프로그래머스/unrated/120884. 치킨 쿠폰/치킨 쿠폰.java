@@ -19,16 +19,15 @@ chicken = 1081
 100 - 10 => 1 추가 => 91마리
 91 - 10 => 1마리 추가 => 82마리
 
-time:
-space:
+time: O(n), n = chicken
+space: O(1)
 */
 class Solution {
     public int solution(int chicken) {
-        if (chicken < 10) return 0;
         int result = 0;
         
         while (chicken > 9) {
-            chicken = chicken - 9;
+            chicken -= 9;
             result++;
         }
         
