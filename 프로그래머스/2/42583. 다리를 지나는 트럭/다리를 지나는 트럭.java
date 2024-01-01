@@ -53,23 +53,22 @@ class Solution {
 		int curWeight = 0;
 
 		while (true) {
-			// 초 증가
-			time++;
 
 			// 트럭 도착
 			// 도착한 트럭이 있는가? > 현재 무게에서 제거
-			if (curBridgeIdx >= bridge_length && list.get(curBridgeIdx - bridge_length) != 0) {
-				curWeight -= list.get(curBridgeIdx - bridge_length);
+			if (curBridgeIdx >= bridge_length && list.get(curBridgeIdx - bridge_length) != 0) { // 다리 길이 이상 초가 지났으며, 도착한 트럭의 값이 0이 아닌 경우
+				curWeight -= list.get(curBridgeIdx - bridge_length); // 무게에서 빼기 = 도착
 			}
 
 			// 보낼 트럭이 있는가?
 			if (curTruckIdx >= truck_weights.length) { // 트럭을 모두 다 보낸 경우
-				list.add(0);
+				
+                list.add(0);
 				
 				// 다리에 트럭이 없는 경우
 				if (curWeight == 0) {
 					break;
-				} else {
+				} else { // 다리에 트럭이 남았을 경우
 					curBridgeIdx++;
 					continue;
 				}
@@ -93,6 +92,6 @@ class Solution {
 			curBridgeIdx++; // 다리 인덱스 증가
 		}
 
-		return time;
+		return list.size();
     }
 }
