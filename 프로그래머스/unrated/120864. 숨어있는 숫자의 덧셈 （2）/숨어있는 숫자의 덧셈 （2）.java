@@ -20,23 +20,14 @@ import java.util.*;
 class Solution {
     public int solution(String my_string) {
         int answer = 0;
-        StringBuilder sbCurN = new StringBuilder();
         
-        for (int i = 0; i < my_string.length(); i++) {
-            char curC = my_string.charAt(i);
-            
-            if (Character.isLetter(curC) && sbCurN.length() > 0) { // 문자일 때
-                answer += Integer.parseInt(sbCurN.toString());
-                sbCurN.setLength(0);
-            } else if (!Character.isLetter(curC)){ // 숫자일 때
-                sbCurN.append(String.valueOf(curC));
+        String[] arr = my_string.replaceAll("[a-z|A-Z]", " ").split(" ");
+        
+        for (int i = 0; i < arr.length; i++) {
+            if (!arr[i].equals("")) {
+                answer += Integer.parseInt(arr[i]);
             }
         }
-        
-        if (sbCurN.length() != 0) {
-            answer += Integer.parseInt(sbCurN.toString());
-        }
-        
         return answer;
     }
 }
