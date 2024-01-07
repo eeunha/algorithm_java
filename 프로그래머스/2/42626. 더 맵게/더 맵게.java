@@ -5,8 +5,7 @@ C: scoville의 길이는 2 이상 1,000,000 이하
     K는 0 이상 1,000,000,000 이하
     scoville의 원소는 각각 0 이상 1,000,000 이하
     scoville의 원소는 각각 0 이상 1,000,000 이하
-E: 모든 스코빌이 0인 경우 -> -1 반환
-    모든 스코빌이 K 이상일 경우 -> 0 반환
+E:
 
 스코빌 지수를 K 이상으로 만들고 싶다.
 -> 스코빌 지수가 가장 낮은 두 개의 음식을 섞는다.
@@ -21,44 +20,65 @@ scoville에는 정렬되지 않았다.
 
 최소 힙의 루트가 k이상일 때까지 반복한다.
 
-ds: min heap -> Priority Queue
+ds: min heap
 algorithm:
 
-time: O(nlogn)
-space: O(n)
+1. scoville을 min heap으로 만들기
+2.
+
+time:
+solution:
 */
-import java.util.*;
 class Solution {
+    public int[] heap;
+    public int size;
+    
     public int solution(int[] scoville, int K) {
         int answer = 0;
-        int firstMinScoville = 0;
-        int secondMinScoville = 0;
-        int newScoville = 0;
         
-        int sum = 0;
+        buildHeap(scoville);
+        printHeapArray();
         
-        PriorityQueue<Integer> heap = new PriorityQueue<>();
+        return answer;
+    }
+    
+    public void buildHeap(int[] arr){
+        this.size = arr.length;
+        this.heap = new int[size + 1];
+        System.arraycopy(arr, 0, heap, 1, size);
         
-        for (int i = 0; i < scoville.length; i++) {
-            heap.add(scoville[i]);
-            sum += scoville[i];
+        for (int i = size / 2; i >= 1; i--) {
+            minHeapify(i);
+        }
+    }
+    
+    public void minHeapify(int i){
+        int left = 2 * i;
+        int right = 2 * i + 1;
+        int smallest;
+        
+        smallest = (left <= size && heap[left] < heap[i]) ? left : i;
+        
+        if (right <= size && heap[right] < heap[i]) {
+            smallest = right;
         }
         
-        //edge cases
-        if (sum == 0) return -1;
-        if (heap.peek() >= K) return 0;
-        
-        while (heap.peek() < K && heap.size() >= 2) {
-            firstMinScoville = heap.poll();
-            secondMinScoville = heap.poll();
-            
-            newScoville = firstMinScoville + (secondMinScoville * 2);
-            
-            heap.add(newScoville);
-            
-            answer++;
+        if (smallest != i) {
+            swap(i, smallest);
+            minHeapify(smallest);
         }
-        
-        return (answer == 0 || (heap.size() == 1 && heap.peek() < K)) ? -1 : answer;
+    }
+    
+    public void swap(int i, int j) {
+        int temp = heap[i];
+        heap[i] = heap[j];
+        heap[j] = temp;
+    }
+    
+    public void printHeapArray() {
+        for (int i = 1; i <= size; i++) {
+            System.out.print(heap[i] + " ");
+        }
+        System.out.println();
     }
 }
