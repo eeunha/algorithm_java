@@ -5,8 +5,6 @@ class Solution {
         //edge cases
         if (array.length == 1) return array[0];
         
-        int answer = 0;
-        
         Map<Integer, Integer> map = new HashMap<>();
         
         for (int n : array) {
@@ -23,13 +21,11 @@ class Solution {
             }
         }
         
-        System.out.println(mode);
-        
         for (int key : map.keySet()) {
             if (modeCount == map.get(key) && key != mode) {
                 return -1;
             }
-        }
+        } 
         
         return mode;
     }
