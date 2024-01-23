@@ -1,7 +1,8 @@
 /*
-time: O(n^n)
-space: O(n)
+time: O(N^N)
+space: O(N)
 */
+import java.util.*;
 class Solution {
     boolean[] visited;
     int answer;
@@ -10,33 +11,20 @@ class Solution {
         answer = 0;
         visited = new boolean[dungeons.length];
         
-        for (int i = 0; i < dungeons.length; i++) {
-            dfs(i, dungeons, k, 0);    
-        }
+        dfs(dungeons, k, 0);    
         
         return answer;
     }
     
-    public void dfs(int idx, int[][] dungeons, int k, int count) {
-        //현재 인덱스를 방문할 수 있는가?
-        if (!visited[idx] && dungeons[idx][0] <= k) {
-            visited[idx] = true;
-            
-            for (int i = 0; i < dungeons.length; i++) {
-                dfs(i, dungeons, k - dungeons[idx][1], count + 1);
-            }
-            
-            visited[idx] = false;
-        }
-        //있다면
-        //visited = true
-        //for문으로 dungeons 1번부터 length까지 모두 방문하면서 dfs 돌기
-        //visited = false
+    public void dfs(int[][] dungeons, int k, int count) {
         
-        else {
-            answer = Math.max(answer, count);
+        for (int i = 0; i < dungeons.length; i++) {
+            if (!visited[i] && dungeons[i][0] <= k) {
+                visited[i] = true;
+                dfs(dungeons, k - dungeons[i][1], count + 1);
+                answer = Math.max(answer, count + 1);
+                visited[i] = false;
+            }
         }
-        //없다면
-        //answer에 answer과 count중 큰 값 넣기
     }
 }
