@@ -22,9 +22,10 @@ class Solution {
             if (!visited[i] && dungeons[i][0] <= k) {
                 visited[i] = true;
                 dfs(dungeons, k - dungeons[i][1], count + 1);
-                answer = Math.max(answer, count + 1);
                 visited[i] = false;
             }
         }
+        
+        answer = Math.max(answer, count);
     }
 }
