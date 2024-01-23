@@ -1,52 +1,43 @@
 /*
-I: int k, int[][] dungeons
-O: int
-C: k는 1 이상 5,000 이하인 자연수
-    dungeons의 세로(행) 길이(즉, 던전의 개수)는 1 이상 8 이하
-    dungeons의 가로(열) 길이는 2
-    dungeons의 각 행은 각 던전의 ["최소 필요 피로도", "소모 피로도"]
-    "최소 필요 피로도"는 항상 "소모 피로도"보다 크거나 같습니다.
-    "최소 필요 피로도"와 "소모 피로도"는 1 이상 1,000 이하인 자연수
-    서로 다른 던전의 ["최소 필요 피로도", "소모 피로도"]가 서로 같을 수 있습니다.
-E:
 
-ds: array
-algo: dfs
-
-time:
-space:
 */
+import java.util.*;
 class Solution {
-    int answer = 0;
+    boolean[] visited;
+    int answer;
     
     public int solution(int k, int[][] dungeons) {
+        answer = 0;
+        visited = new boolean[dungeons.length];
+        
         for (int i = 0; i < dungeons.length; i++) {
-            dfs(i, k, dungeons, new boolean[dungeons.length], 0);  
+            Arrays.fill(visited, false);
+            dfs(i, dungeons, k, 0);    
         }
         
         return answer;
     }
     
-    public void dfs(int startIdx, int k, int[][] dungeons, boolean[] visited, int curVisitedDungeons) {
-        
-        //현재 노드를 방문할 수 있는가?
-        if (!visited[startIdx] && k >= dungeons[startIdx][0]) {
-            //있다면
-            k -= dungeons[startIdx][1];
-            visited[startIdx] = true;
-            curVisitedDungeons++;
+    public void dfs(int idx, int[][] dungeons, int k, int count) {
+        //현재 인덱스를 방문할 수 있는가?
+        if (!visited[idx] && dungeons[idx][0] <= k) {
+            visited[idx] = true;
             
-        } else {
-            //없다면
-            answer = Math.max(answer, curVisitedDungeons);
-            return;
+            for (int i = 0; i < dungeons.length; i++) {
+                dfs(i, dungeons, k - dungeons[idx][1], count + 1);
+            }
+            
+            visited[idx] = false;
         }
-
-        for (int i = 0; i < dungeons.length; i++) {
-            dfs(i, k, dungeons, visited, curVisitedDungeons);
-        }
+        //있다면
+        //visited = true
+        //for문으로 dungeons 1번부터 length까지 모두 방문하면서 dfs 돌기
+        //visited = false
         
-        visited[startIdx] = false;
-        k += dungeons[startIdx][1];
+        else {
+            answer = Math.max(answer, count);
+        }
+        //없다면
+        //answer에 answer과 count중 큰 값 넣기
     }
 }
