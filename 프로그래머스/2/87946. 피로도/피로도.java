@@ -1,7 +1,7 @@
 /*
-
+time: O(n^n)
+space: O(n)
 */
-import java.util.*;
 class Solution {
     boolean[] visited;
     int answer;
@@ -11,7 +11,6 @@ class Solution {
         visited = new boolean[dungeons.length];
         
         for (int i = 0; i < dungeons.length; i++) {
-            Arrays.fill(visited, false);
             dfs(i, dungeons, k, 0);    
         }
         
