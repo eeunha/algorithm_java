@@ -8,13 +8,9 @@ class Solution {
             if (code.charAt(i) == '1') {
                 //모드 변경
                 mode = (mode == 0) ? 1 : 0;
-            } else {
+            } else if (i % 2 == mode) {
                 //문자
-                if (mode == 0 && i % 2 == 0) {
-                    sb.append(code.charAt(i));
-                } else if (mode == 1 && i % 2 == 1) {
-                    sb.append(code.charAt(i));
-                }
+                sb.append(code.charAt(i));
             } 
         }
         
