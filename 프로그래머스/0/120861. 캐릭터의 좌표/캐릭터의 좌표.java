@@ -8,7 +8,6 @@ class Solution {
                 if (isOutOfBounds(board, x, y, -1, 0)) {
                     continue;
                 }
-                
                 x--;
             } else if (keyinput[i].equals("right")) {
                 if (isOutOfBounds(board, x, y, 1, 0)) {
