@@ -7,14 +7,13 @@ class Solution {
             int curSum = i;
             
             for (int j = i + 1; j <= n; j++) {
-                 if (curSum >= n) {
+                if (curSum < n) {
+                    curSum += j;
+                } else {
                     if (curSum == n) {
                         answer++;
                     }
                     break;
-                     
-                } else {
-                    curSum += j;
                 }
             }
         }
