@@ -20,8 +20,8 @@ class Solution {
             }
             
             //다른 숫자와 붙는 경우
-            min = (min % 2 == 1) ? min / 2 + 1 : min / 2;
-            max = (max % 2 == 1) ? max / 2 + 1 : max / 2;
+            min = min / 2 + min % 2;
+            max = max / 2 + max % 2;
                 
             answer++;
         }
