@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Solution {
     public int[] solution(int[] arr) {
         int startIdx = -1;
@@ -23,12 +25,6 @@ class Solution {
             return new int[] {arr[startIdx]};
         }
         
-        int[] answer = new int[endIdx - startIdx + 1];
-
-        for (int i = 0; i < answer.length; i++) {
-            answer[i] = arr[startIdx + i];
-        } 
-        
-        return answer;
+        return Arrays.copyOfRange(arr, startIdx, endIdx + 1);
     }
 }
