@@ -5,6 +5,6 @@ class Solution {
         BigInteger bA = new BigInteger(a);
         BigInteger bB = new BigInteger(b);
         BigInteger sum = bA.add(bB);
-        return sum.toString();
+        return sum + "";
     }
 }
