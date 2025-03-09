@@ -23,7 +23,7 @@ pseudo:
             이동시키면서 시작점과 이동점을 문자열로 합쳐 셋에 저장한다.
     셋의 크기를 반환한다.
 
-time: O(N^2) N은 dirs의 개수
+time: O(N) N은 dirs의 개수
 space: O(N) N은 dirs의 개수
 
 solution:
@@ -39,7 +39,7 @@ class Solution {
         
         for (int i = 0; i < dirs.length(); i++) { //O(N)
            
-            int[] newDir = changeDir(x, y, dirs.charAt(i)).clone(); //O(N)
+            int[] newDir = changeDir(x, y, dirs.charAt(i)).clone();
             
             if (correctDir(newDir[0], newDir[1])) {
                 String reverseStr = "" + newDir[0] + newDir[1] + x + y;
