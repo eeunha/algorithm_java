@@ -32,49 +32,46 @@ solution:
 class Solution {
     public int solution(String dirs) {
         
-        int x = 0;
-        int y = 0;
-        
+        int x = 5;
+        int y = 5;
+
         HashSet<String> set = new HashSet<>();
-        
-        for (int i = 0; i < dirs.length(); i++) { //O(N)
-           
-            int[] newDir = changeDir(x, y, dirs.charAt(i)).clone();
+
+        for (int i = 0; i < dirs.length(); i++) {
+            
+            int[] newDir = moveDir(x, y, dirs.charAt(i)).clone();
             
             if (correctDir(newDir[0], newDir[1])) {
-                String reverseStr = "" + newDir[0] + newDir[1] + x + y;
-                if (!set.contains(reverseStr)) {
-                    set.add("" + x + y + newDir[0] + newDir[1]);
+                
+                String curDirStr = "" + x + y + newDir[0] + newDir[1];
+                
+                if (!set.contains(curDirStr)) {
+                    set.add(curDirStr);
+                    set.add("" + newDir[0] + newDir[1] + x + y);
                 }
                 
                 x = newDir[0];
                 y = newDir[1];
             }
         }
-        
-        return set.size();
+
+        return set.size() / 2;
     }
     
-    public int[] changeDir(int x, int y, char dir) {
-        
-        if (dir == 'U') { // y++
-                y++;
-        } else if (dir == 'D') { // y--
+    public boolean correctDir(int nx, int ny) {
+        return nx >= 0 && nx <= 10 && ny >= 0 && ny <= 10;
+    }
+
+    public int[] moveDir(int x, int y, char dir) {
+        if (dir == 'U') {
+            y++;
+        } else if (dir == 'D') {
             y--;
-        } else if (dir == 'L') { // x--
+        } else if (dir == 'L') {
             x--;
-        } else { // x++
+        } else {
             x++;
         }
-        
         return new int[]{x, y};
     }
-    
-    public boolean correctDir(int x, int y) {
-        if (x > 5 || x < -5 || y > 5 || y < -5) {
-            return false;
-        }
-        return true;
-    }
-    
 }
