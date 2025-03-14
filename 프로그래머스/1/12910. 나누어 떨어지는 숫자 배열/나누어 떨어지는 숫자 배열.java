@@ -40,7 +40,7 @@ class Solution {
         if (list.size() > 0) {
             Collections.sort(list);
         } else {
-            list.add(-1);
+            return new int[]{-1};
         }
         
         return list.stream().mapToInt(Integer::intValue).toArray();
