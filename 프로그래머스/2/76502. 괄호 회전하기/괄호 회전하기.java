@@ -1,41 +1,69 @@
 import java.util.*;
 
+/*
+I: String s
+O: int
+C: s의 길이는 1 이상 1,000 이하
+E: s.length() % 2 != 0 > return 0
+
+[](){}[](){}
+     ^    ^
+
+}]()[{}]()[{
+     ^    ^
+
+ds: stack
+algo:
+
+pseudo:
+s의 길이가 홀수면 바로 0을 반환한다.(edge case)
+올바른 괄호 문자열의 개수를 저장할 변수를 하나 만든다.
+스택 생성
+s 2개를 연달아 붙여 문자열을 하나 만든다.
+s의 처음부터 s의 길이까지 반복문을 돌려 시작점을 가진다.
+시작점부터 끝점(s의 길이만큼 더한 것)까지 올바를 괄호 문자열인지 확인한다.
+올바르다면 개수를 증가시킨다.
+
+time: O(N^2)
+space: O(N)
+
+solution:
+*/
 class Solution {
     public int solution(String s) {
-        if (s.length() % 2 == 1) return 0;
+        //edge case
+        if (s.length() % 2 != 0) return 0;
         
-        // 현재 문자열이 올바른 괄호인가?
-        int answer = isCorrect(s) ? 1 : 0;
+        String ss = s + s;
+        int answer = 0;
+        int length = s.length();
         
-        //회전하기
-        for (int i = 1; i < s.length(); i++) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(s.substring(i));
-            sb.append(s.substring(0, i));
-            
-            if (isCorrect(sb.toString())) {
-                answer++;  
-            } 
+        for (int i = 0; i < length; i++) {
+            String curStr = ss.substring(i, i + length);
+            if (isCorrect(curStr)) {
+                answer++;
+            }
         }
         
         return answer;
     }
     
-    public boolean isCorrect (String s) {
+    public boolean isCorrect(String str) {
+        
         Stack<Character> stack = new Stack<>();
         
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < str.length(); i++) {
+            char curChar = str.charAt(i);
             
-            char curC = s.charAt(i);
-            
-            if (curC == '(' || curC == '{' || curC == '[') {
-                stack.push(curC);
-            } else if (!stack.isEmpty() 
-                       && (curC - stack.peek() == 1 || curC - stack.peek() == 2)) {
-                //올바른 쌍인 경우
-                stack.pop();
+            if (curChar == '(' || curChar == '[' || curChar == '{') {
+                stack.push(curChar);
             } else {
-                return false;
+                if (stack.isEmpty()) return false;
+                if ((int) (curChar - stack.peek()) == 1 || (int) (curChar - stack.peek()) == 2) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
             }
         }
         
