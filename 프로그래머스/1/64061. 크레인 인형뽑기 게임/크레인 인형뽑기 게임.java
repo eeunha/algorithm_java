@@ -55,8 +55,8 @@ class Solution {
         int answer = 0;
         Stack<Integer> stack = new Stack<>();
         
-        for (int m = 0; m < moves.length; m++) {
-            int j = moves[m] - 1;
+        for (int move : moves) {
+            int j = move - 1;
             
             for (int i = 0; i < board.length; i++) {
                 int curVal = board[i][j];
