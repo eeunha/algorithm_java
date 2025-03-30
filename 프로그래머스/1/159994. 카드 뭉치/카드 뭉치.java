@@ -15,7 +15,7 @@ algo:
 
 pseudo:
 
-time: O(N+M) N은 cards1의 길이, M은 cards2의 길이
+time: O(N) N은 goal의 길이
 space: O(1)
 */
 class Solution {
@@ -24,18 +24,14 @@ class Solution {
         int idx1 = 0;
         int idx2 = 0;
         
-        int cnt = 0;
-        
         for (String s : goal) {
             if (idx1 < cards1.length && s.equals(cards1[idx1])) {
                 idx1++;
-                cnt++;
             } else if (idx2 < cards2.length && s.equals(cards2[idx2])) {
                 idx2++;
-                cnt++;
-            }
+            } else return "No";
         }
         
-        return (cnt == goal.length) ? "Yes": "No";
+        return "Yes";
     }
 }
