@@ -46,16 +46,17 @@ class Solution {
         HashMap<String, String> map = new HashMap<>();
         
         for (String s : record) {
+            if (s.startsWith("L")) {
+                resultLength++;
+                continue;
+            }
+            
             if (s.startsWith("E")) {
                 resultLength++;
-                String[] arr = s.split(" ");
-                map.put(arr[1], arr[2]);
-            } else if (s.startsWith("L")) {
-                resultLength++;
-            } else {
-                String[] arr = s.split(" ");
-                map.put(arr[1], arr[2]);
             }
+            
+            String[] arr = s.split(" ");
+            map.put(arr[1], arr[2]);
         }
         
         String[] answer = new String[resultLength];
