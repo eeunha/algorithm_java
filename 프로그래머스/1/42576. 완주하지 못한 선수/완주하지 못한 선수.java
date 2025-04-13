@@ -34,15 +34,12 @@ class Solution {
         }
         
         for (String p : participant) {
-            if (map.containsKey(p)) {
-                if (map.get(p) == 1) {
-                    map.remove(p);
-                } else {
-                    map.put(p, map.get(p) - 1);
-                }
-            } else return p;   
+            if (map.getOrDefault(p, 0) == 0) {
+                return p;
+            }
+            map.put(p, map.get(p) - 1);
         }
         
-        return "";
+        return null;
     }
 }
