@@ -11,7 +11,6 @@ class Solution {
     public int[][] solution(int n) {
         
         int[][] answer = new int[n][n];
-        boolean[][] isVisited = new boolean[n][n];
         
         int x = 0;
         int y = 0;
@@ -21,13 +20,12 @@ class Solution {
         
         for (int i = 1; i <= n * n; i++) {
             answer[x][y] = i;
-            isVisited[x][y] = true;
             
             int newX = x + dir[dirIdx][0];
             int newY = y + dir[dirIdx][1];
             
             // 바꿀 좌표가 영역 밖이거나, 영역 안인데 방문함
-            if (!isValid(newX, newY, n) || isVisited[newX][newY]) {
+            if ((newX >= n || newX < 0 || newY >= n || newY < 0) || answer[newX][newY] != 0) {
                 // 방향 바꾸기
                 dirIdx = (dirIdx + 1) % 4;
             }
@@ -38,10 +36,5 @@ class Solution {
         }
         
         return answer;
-    }
-    
-    public boolean isValid(int newX, int newY, int n) {
-        if (newX >= n || newX < 0 || newY >= n || newY < 0) return false;
-        return true;
     }
 }
