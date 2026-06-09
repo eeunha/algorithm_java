@@ -28,7 +28,7 @@ E:
 현재 병 수 = n - (a*몫) + 몫 * b
 받은 콜라 수 += 몫 * b
 
-time: O(N)
+time: O(logN)
 space: O(1)
 */
 class Solution {
