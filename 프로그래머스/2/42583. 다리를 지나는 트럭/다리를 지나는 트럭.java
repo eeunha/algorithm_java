@@ -1,39 +1,35 @@
 /*
-I: int bridge_length 다리에 올라갈 수 있는 트럭 수, int weight 다리가 견딜 수 있는 무게, int[] truck_weights 트럭 무게 배열
-O: int 다리를 다 건너는데 드는 최소 시간(초)
-C: bridge_length는 1 이상 10,000 이하
-    weight는 1 이상 10,000 이하
-    truck_weights의 길이는 1 이상 10,000 이하
-    모든 트럭의 무게는 1 이상 weight 이하
-E: truck_weights.length == 1, return bridge_length + 1
-
-트럭 여러대가 일차선 다리를 정해진 순으로 건너기
-모든 트럭이 다리를 건너는데 드는 최소 시간(초)
-다리에는 최대 bridge_length 대 올라갈 수 있고, weight 이하 무게를 견딜 수 있다.
-(단, 다리를 완전히 올라야만 무게 계산 가능)
-
-트럭 2개 가능, 무게는 10kg 가능 => 7, 4, 5, 6 트럭이 순서대로 최단시간 안에 다리를 건너려면
-
+I: int bridge_length, int weight, int[] truck_weight
+O: int
+C: 1 <= bridge_length <= 10000
+    1 <= weight <= 10000
+    1 <= truck_weights.length <= 10000
+    1 <= truck weight <= weight
+    다리에는 최대 bridge_length 대의 트럭 올라갈 수 있음
+    다리 하중 <= weight
+    다리에 완전히 오르지 않은 트럭의 무게는 무시
+E: truck_weights.length == 1 > return bridge_length + 1(진입일);
 
 ds: queue
 algo:
 
-bridge_length만큼 큐 생성하기 -> 불가. 매번 물어보는 작업 필요
-트럭 무게를 재는 변수 필요
-초 수 변수 필요 -> answer 변수
+현재 다리 하중, 트럭 idx, 일수, deque 생성
 
-트럭 하나가 다리를 건너는데 걸리는 시간 = bridge_length + 1 초
+다리 길이만큼 덱에 -1 넣기
 
-queue.add(트럭1), answer++, curWeight += truck_weights[i]
+트럭 개수만큼 while
+일수 증가
+덱에서 poll
+poll 값이 -1이 아닌 경우에만 현재 다리 하중에서 poll 값 빼기
 
-새로운 트럭을 하나 더 보내려면,
-0. answer++ (시간 증가)
-1. 큐의 크기 = 다리의 길이를 확인 -> 도착한 차 빼내기
--> 다리의 길이가 아직 남았다면, 그대로 올릴 수 있다.
--> 가득 찼다면, queue.poll(), curWeight에서 트럭 무게 빼기. 그다음 2로 이동
-2. 다리의 무게 weight를 확인
--> curWeight + truck무게 <= weight -> queue.add(트럭2)
--> 초과한다면, 현재 트럭을 먼저 다리에 건너기
+다리 하중 - 현재 하중 >= 현재 트럭 하중
+    현재 트럭 무게를 add
+    현재 하중 + 현재 트럭 무게
+    idx++
+아닌 경우
+    -1 add
+
+일수 + 다리의 길이 반환
 
 time: O(N)
 space: O(N)
@@ -41,57 +37,40 @@ space: O(N)
 import java.util.*;
 class Solution {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        // edge cases
-		if (truck_weights.length == 1)
-			return bridge_length + 1;
-
-		int time = 0;
-		ArrayList<Integer> list = new ArrayList<>();
-
-		int curBridgeIdx = 0;
-		int curTruckIdx = 0;
-		int curWeight = 0;
-
-		while (true) {
-
-			// 트럭 도착
-			// 도착한 트럭이 있는가? > 현재 무게에서 제거
-			if (curBridgeIdx >= bridge_length && list.get(curBridgeIdx - bridge_length) != 0) { // 다리 길이 이상 초가 지났으며, 도착한 트럭의 값이 0이 아닌 경우
-				curWeight -= list.get(curBridgeIdx - bridge_length); // 무게에서 빼기 = 도착
-			}
-
-			// 보낼 트럭이 있는가?
-			if (curTruckIdx >= truck_weights.length) { // 트럭을 모두 다 보낸 경우
-				
-                list.add(0);
-				
-				// 다리에 트럭이 없는 경우
-				if (curWeight == 0) {
-					break;
-				} else { // 다리에 트럭이 남았을 경우
-					curBridgeIdx++;
-					continue;
-				}
-			}
-
-			// 현재 넣을 트럭
-			int curTruck = truck_weights[curTruckIdx];
-
-			// 넣을 트럭과 존재하는 트럭 무게를 비교하여 초과하는지 확인하기
-			if (curWeight > 0 && curWeight + curTruck > weight) { // 트럭 존재하지만 초과하는 경우
-
-				list.add(0); // 널값 넣기
-
-			} else { // 트럭 미존재 또는 트럭이 존재하나 더 넣을 수 있음
-				// 트럭 보내기
-				list.add(curTruck); // 다리에 트럭 올리기
-				curWeight += curTruck; // 현재 트럭 무게 추가하기
-				curTruckIdx++; // 트럭 인덱스 증가
-			}
-
-			curBridgeIdx++; // 다리 인덱스 증가
-		}
-
-		return list.size();
+        // edge case
+        if (truck_weights.length == 1) {
+             return bridge_length + 1;
+        }
+        
+        int answer = 0;
+        int idx = 0;
+        int curWeight = 0;
+        Deque<Integer> dq = new ArrayDeque<>();
+        
+        for (int i = 0; i < bridge_length; i++) {
+            dq.add(-1);
+        }
+        
+        while (idx < truck_weights.length) {
+            answer++;
+            
+            int out = dq.poll();
+            
+            if (out != -1) {
+                curWeight -= out;
+            }
+            
+            int curTruckWeight = truck_weights[idx];
+            
+            if (weight - curWeight >= curTruckWeight) {
+                dq.add(curTruckWeight);
+                curWeight += curTruckWeight;
+                idx++;
+            } else {
+                dq.add(-1);
+            }
+        }
+        
+        return answer + bridge_length;
     }
 }
