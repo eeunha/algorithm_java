@@ -31,8 +31,8 @@ poll 값이 -1이 아닌 경우에만 현재 다리 하중에서 poll 값 빼기
 
 일수 + 다리의 길이 반환
 
-time: O(N)
-space: O(N)
+time: O(W) bridge_length * truck_weights.length
+space: O(N) N = bridge_length
 */
 import java.util.*;
 class Solution {
