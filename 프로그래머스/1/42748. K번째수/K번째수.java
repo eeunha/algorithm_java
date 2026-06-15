@@ -1,50 +1,45 @@
-import java.util.*;
 /*
 I: int[] array, int[][] commands
-O: int[] answer
-C: array의 길이는 1 이상 100 이하
-    array의 각 원소는 1 이상 100 이하
-    commands의 길이는 1 이상 50 이하
-    commands의 각 원소는 길이가 3 (1부터 시작)
-E: 
+O: int[]
+C: 1 <= array.length <= 100
+    1 <= array 원소 <= 100
+    1 <= commands.length <= 50
+    commands 원소.length = 3
+E:
 
-commands[][0] = i = 자르기 시작한 인덱스
-commands[][1] = j = 자르는 마지막 인덱스
-commands[][2] = k = k번째 있는 수
+배열의 i번째 숫자부터 j번째 숫자까지 자르기
+자른 배열 정렬하기
+정렬된 배열의 k번째 있는 수 찾기
 
-ds: 정렬
-algo:
+ds: array
+algo: sort
 
-- i = j -> array[i] 를 배열에 넣기
-
-- i != j -> 잘라서 배열로 만들기
-i~j까지 자르기
-정렬하기
-k번째 수 찾아서 결과 배열에 넣기
-
+solution:
 int[] answer = new int[commands.length];
-배열을 잘라서 배열로 만들기
+배열을 i-1부터 j-1 인덱스까지 잘라서 다른 배열로 만들기
+자른 배열을 정렬하기
+k-1 인덱스에 있는 숫자를 찾아서 결과 배열에 넣기
+결과 배열 반환
 
-time: O(m*nlogn), n = commands.length, m = temp.length
-space: O(n), n = commands.length
+time: O(NlogN) 정렬, N = array.length
+space: O(N)
 */
+import java.util.*;
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
         int[] answer = new int[commands.length];
-
-		for (int i = 0; i < commands.length; i++) {
-			int startIdx = commands[i][0] - 1; //자르기 시작할 인덱스
-			int endIdx = commands[i][1];    //마지막으로 잘리는 인덱스 + 1
-			int findIdx = commands[i][2] - 1; //찾아야 할 인덱스
-
-			if (startIdx == endIdx) { //하나의 숫자만 자를 경우
-				answer[i] = array[startIdx]; //결과를 반환할 배열에 저장
-			} else { //여러 개의 숫자를 자를 경우
-				int[] temp = Arrays.copyOfRange(array, startIdx, endIdx);
-				Arrays.sort(temp);
-				answer[i] = temp[findIdx]; //결과를 반환할 배열에 저장
-			}
-		}
-		return answer;
+        
+        for (int i = 0; i < commands.length; i++) {
+            int[] curCommand = commands[i];
+            int[] newArr = Arrays.copyOfRange(array, curCommand[0] - 1, curCommand[1]);
+            
+            Arrays.sort(newArr);
+            
+            int k = curCommand[2] - 1;
+            
+            answer[i] = newArr[k];
+        }
+        
+        return answer;
     }
 }
