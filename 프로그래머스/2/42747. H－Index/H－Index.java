@@ -54,6 +54,7 @@ class Solution {
                 return n - i;
             }
             answer = Math.max(answer, Math.min(citations[i], n - i));
+            if (citations[i] < n - i) break;
         }
         return answer;        
     }
