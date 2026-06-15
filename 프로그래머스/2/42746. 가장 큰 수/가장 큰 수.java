@@ -1,55 +1,64 @@
 /*
+0 또는 양의 정수가 주어졌을 때
+정수를 이어 붙여 만들 수 있는 가장 큰 수 알아내기
+
 I: int[] numbers
 O: String
-C: numbers의 길이는 1 이상 100,000 이하
-    numbers의 원소는 0 이상 1,000 이하
-    정답이 너무 클 수 있으니 문자열로 바꾸어 return
-E: numbers.length == 1 -> return numbers[0]+""
+C: numbers 원소 = 0 또는 양의 정수
+    1 <= numbers.length <= 100000
+    0 <= numbers 원소 <= 1000
+E: numbers.length == 1 >> return numbers[0] + "";
+    정렬 후 배열의 첫번째 값이 0인 경우 > 모든 값이 0 >> return "0"
 
-[6, 10, 2] -> [6, 2, 10] => "6210"
-[3, 30, 34, 5, 9] -> [9, 5, 34, 3, 30] => "9534330"
-
-내가 원하는 대로 정렬 시키기
-numbers를 index=0 부터 순회하면서 stringbuilder에 append()
-stringbuilder.toString() 반환
+numbers 숫자를 문자열로 바꾸기
+바꾼 배열을 내림차순 정렬 (두 문자를 붙이기 > 숫자로 변경 > 크기비교)
+정렬된 배열을 순회하면서 문자열로 더하기(stringbuilder)
+문자열 반환
 
 ds: array
 algo: sort
 
-time:  O(n log n) -> n = numbers.length
+solution:
+if (numbers.length == 1) return numbers[0] + "";
+
+String[] newNumbers = new String[numbers.length]
+for (int i = 0; i < numbers.length; i++) {
+    newNumbers[i] = numbers[i] + "";
+}
+Arrays.sort(newNumbers, (a, b) -> Integer.parseInt(b+a) - Integer.parseInt(a+b)); // Integer로 바꾸면 범위가 벗어날 경우 오류 발생. compareTo로 바꾸기.
+// 정렬 후 맨 앞이 "0"인 경우 "0" 반환
+StringBuilder sb = new StringBuilder();
+for(String s : newNumbers) {
+    sb.append(s);
+}
+return sb.toString();
+
+time: O(NlogN)
 space: O(N)
 */
 import java.util.*;
 class Solution {
     public String solution(int[] numbers) {
-        //edge cases
+        // edge case
         if (numbers.length == 1) return numbers[0] + "";
+
+        String[] newNumbers = new String[numbers.length];
+            
+        for (int i = 0; i < numbers.length; i++) {
+            newNumbers[i] = numbers[i] + "";
+        }
+        
+        Arrays.sort(newNumbers, (a, b) -> (b + a).compareTo(a + b));
+        
+        // edge case
+        if (newNumbers[0].equals("0")) return "0";
         
         StringBuilder sb = new StringBuilder();
         
-        Integer[] nums = new Integer[numbers.length];
-        
-        for (int i = 0; i < numbers.length; i++) {
-            nums[i] = numbers[i];
-        }
-
-        // 퀵 정렬 기반
-        Arrays.sort(nums, (n1, n2) -> {
-            String a = n1 + "";
-            String b = n2 + "";
-            
-            String n1n2 = a + b;
-            String n2n1 = b + a;
-            
-            return n2n1.compareTo(n1n2);
-        });
-        
-        for (int n : nums) {
-            sb.append(n);
+        for (String s : newNumbers) {
+            sb.append(s);
         }
         
-        String str = sb.toString().replaceAll("0", "");
-        
-        return str.equals("") ? "0" : sb.toString();
+        return sb.toString();
     }
 }
