@@ -34,12 +34,13 @@ C: 3 <= k <= 9 (사과 최고점)
     7 <= score.length <= 1000000  -> O(N^2) 불가
     1 <= score[i] <= k
     이익이 발생하지 않는 경우 0 리턴
-E:
+E: score.length < m >> return 0
 
 이익이 발생하지 않는 경우가 뭐지?
 사과가 0점 > 근데 사과는 최소 1점인데? 
 사과가 0개 > 근데 사과는 최소 7개 있는데?
 사과 최대점수가 0점 > 근데 사과 최대점수는 최소 3점 이상인데?
+>> 한 상자에 들어가는 사과 수보다 가진 사과가 적은 경우
 
 최대 4점, 한 상자에 3개, [4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 1, 1]
 
@@ -64,6 +65,7 @@ for (i = 0; i < 구해야 할 박스 개수; i++) {
 }
 
 전체 가격 반환
+>> 결국 상자에 담길 때까지 해당 인덱스의 사과만 뽑아내서 계산하면 됨.
 
 time: O(NlogN) N = score.length
 space: O(1)
@@ -71,15 +73,16 @@ space: O(1)
 import java.util.*;
 class Solution {
     public int solution(int k, int m, int[] score) {
+        
+        // edge case
+        if (score.length < m) return 0;
+
         int answer = 0;
-        int boxCount = score.length / m;
-        int idx = score.length - m;
         
         Arrays.sort(score);
         
-        for (int i = 0; i < boxCount; i++) {
-            answer += score[idx] * m;
-            idx -= m;
+        for (int i = score.length - m; i >= 0; i -= m) {
+            answer += score[i] * m;
         }
         
         return answer;
