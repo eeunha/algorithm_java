@@ -44,7 +44,7 @@ public int countFactors (int n) {
     
     HashSet<Integer> set = new HashSet<>();
     
-    for (int i = 1; i <= n / 2; i++) {
+    for (int i = 1; i <= n / 2; i++) { >> 근데 범위를 제곱근까지 줄여도 가능
         if (n % i == 0) { // 나누어 떨어지는 경우 > 약수일 때
             set.add(i);
             set.add(n / i);
@@ -54,10 +54,9 @@ public int countFactors (int n) {
     return set.size();
 }
 
-time: O(N^2)
-space: O(N)
+time: O(N*sqrt(N))
+space: O(1)
 */
-import java.util.*;
 class Solution {
     public int solution(int number, int limit, int power) {
         
@@ -75,17 +74,19 @@ class Solution {
     }
     
     public int countFactors (int n) {
-        if (n == 1) return 1;
 
-        HashSet<Integer> set = new HashSet<>();
+        int cnt = 0; // Integer > int 박싱과 set 중복 체크 오버헤드 제거
 
-        for (int i = 1; i <= n / 2; i++) {
+        for (int i = 1; i * i <= n; i++) { // Math로 매번 계산해야하는 오버헤드 제거
             if (n % i == 0) { // 나누어 떨어지는 경우 > 약수일 때
-                set.add(i);
-                set.add(n / i);
+                if (i * i == n) {
+                    cnt++; // 제곱근인 경우
+                } else {
+                    cnt += 2; // 일반적인 약수 쌍
+                }
             }
         }
 
-        return set.size();
+        return cnt;
     }
 }
