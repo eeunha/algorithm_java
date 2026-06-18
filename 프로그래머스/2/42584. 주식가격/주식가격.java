@@ -18,28 +18,59 @@ E:
 O(N^2) 이 편하긴 하겠으나 시간초과 (최대 10만)
 정렬은 하면 안됨. 순서 중요
 
-일단은 O(N^2)로 해보기
-
-ds:
+ds: stack
 algo:
 
-time: O(N^2)
+solution:
+결과 배열 생성
+스택 생성
+prices 0부터 순회
+    stack.isEmpty() >> push(i)
+    prices[stack.peek()] <= prices[i] >> push(i)
+    prices[stack.peek()] > prices[i] 
+        >> popIdx = pop()
+        answer[popIdx] = i - pop()
+        반복 (자신보다 작은거 있다면 계속 빼기)
+        현재 값보다 더 크거나 같다 >> 탈출 안시키고 현재 값을 push(i)
+        i++
+while (!stack.isEmpty()) {
+    popIdx = pop()
+    버틴 시간 = 마지막 인덱스 - popIdx
+    answer[popIdx] = 버틴 시간
+}
+return answer;
+
+time: O(N)
 space: O(N)
 */
+import java.util.*;
 class Solution {
     public int[] solution(int[] prices) {
         int[] answer = new int[prices.length];
+        ArrayDeque<Integer> dq = new ArrayDeque<>();
+        int idx = 0;
         
-        for (int i = 0; i < prices.length - 1; i++) {
-            int startPrice = prices[i];
-            int time = 0;
-            for (int j = i + 1; j < prices.length; j++) {
-                time++;
-                if (startPrice > prices[j]) {
-                    break;
-                } 
+        while (idx < prices.length) {
+            if (dq.isEmpty()) {
+                dq.push(idx);
+                idx++;
+                continue;
+            } 
+            
+            int curPrice = prices[idx];
+            int lastPrice = prices[dq.peek()];
+            if (lastPrice <= curPrice) {
+                dq.push(idx);
+                idx++;
+            } else {
+                int popIdx = dq.pop();
+                answer[popIdx] = idx - popIdx;
             }
-            answer[i] = time;
+        }
+        
+        while (!dq.isEmpty()) {
+            int popIdx = dq.pop();
+            answer[popIdx] = prices.length - 1 - popIdx;
         }
         
         return answer;
