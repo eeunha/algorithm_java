@@ -41,31 +41,43 @@ b, y, 가로(혹은 한 변) 안다고 하면
 ds:
 algo: brute force
 
+solution:
+전체 넓이 = brown + yellow
+
+// 한 변의 최소 길이가 3이므로 제일 작은 값이니까 높이로 설정
+for (int h = 3 ; h * h <= 전체넓이; h++) {
+    // 나누어 떨어진다면 h가 높이 가능
+    if (전체 넓이 % h == 0) {
+        int w = 전체넓이 / h;
+        
+        // 가로 세로로 테두리 길이 같나 검증
+        if (brown = 2 * w + (h - 2) * 2) {
+            return new int[]{w, h};
+        }
+    }
+}
+
 time: O(N) N = brown
 space: O(1)
 */
 class Solution {
     public int[] solution(int brown, int yellow) {
-        int[] answer = new int[2];
-        
-        // i는 한 변의 길이일 때
-        for (int i = 3; i < brown / 2; i++) {
-            // 1. 다른 한 변의 길이 구하기
-            int height = brown / 2 - i + 2;
+        // 전체 넓이
+        int totalArea = brown + yellow;
+
+        // h는 세로일 때
+        for (int h = 3; h * h <= totalArea; h++) {
             
-            // 2. 구한 가로세로가 맞는지
-            if (i * height == brown + yellow) {
-                // 3. 긴 변이 가로
-                if (i > height) {
-                    answer[0] = i;
-                    answer[1] = height;
-                } else {
-                    answer[0] = height;
-                    answer[1] = i;
+            // 1. 가로 구하기
+            if (totalArea % h == 0) {
+                int w = totalArea / h;
+                
+                // 2. 구한 가로세로가 맞는지 검증
+                if (brown == (2 * w + (h - 2) * 2)) {
+                    return new int[]{w, h};
                 }
-                break;
             }
         }
-        return answer;
+        return new int[2];
     }
 }
