@@ -67,18 +67,18 @@ class Solution {
         
         for (int i = 0; i < cities.length; i++) {
             String curCity = cities[i].toLowerCase();
-            
-            if (list.indexOf(curCity) == -1) { // cache miss
+            int curIdx = list.indexOf(curCity);
+
+            if (curIdx == -1) { // cache miss
                 if (list.size() < cacheSize) { // 빈자리 있을 때
                     list.add(curCity);
                 } else { // 캐시가 꽉 찼을 때
-                    list.remove(0);
+                    list.removeFirst();
                     list.add(curCity);
                 }
                 answer += 5;
             } else { // cache hit
-                int findIdx = list.indexOf(curCity);
-                list.remove(findIdx);
+                list.remove(curIdx);
                 list.add(curCity);
                 answer++;
             }
